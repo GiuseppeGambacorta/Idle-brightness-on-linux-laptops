@@ -1,0 +1,10 @@
+[Unit]
+Description=luminosita
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/home/giuseppe/Documenti/Programmazione/Linux/x11/luminosita/brightness.sh
+
+
+[Install]
+WantedBy=multi-user.target
