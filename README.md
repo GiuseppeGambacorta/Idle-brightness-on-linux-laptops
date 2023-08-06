@@ -30,8 +30,7 @@
 <br />
 
 
-<h3 align="center">PLC Standard IEC 61131-3 for Arduino</h3>
-
+<h3 align="center">Idle brightness for linux laptops</h3>
   
 </div>
 
@@ -44,9 +43,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
-Hi, i am an ex PLC programmer and sometimes i do some small home projects on arduino or esp32. I'm used to work with professional IDEs to program PLCs with all the necessary tools and functions and I immediately noticed that some commands that in PLC programming are taken for granted here on arduino are not present, so I thought about creating them from 0 in order to simplify my life when I have to work on some of my projects.
-I am sharing my little library here so that everyone can use and improve it
+I've developed a small program to effectively manage my laptop's screen brightness during periods of inactivity. Since I don't usually lock the screen, I've designed the program to automatically reduce the screen's energy consumption when I step away from the computer for a while.
+Currently work only on X11 on POP OS.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -56,23 +54,55 @@ I am sharing my little library here so that everyone can use and improve it
 
 <!-- GETTING STARTED -->
 ## Getting Started
+- install the library
+```
+sudo apt-get install libx11-dev
+```
+- check the path of you brightness values on you laptops, i don't know if is always the same path
+- Adjust the duration after which the screen dims
+- compile the program with:
+```
+gcc main.c -o brightness -lX11 -lXss
+```
+- change brightness.sh with you executable file path
+- add to visudo the executable
+```
+sudo visudo
+```
+- add this at the end of the file
+```
+<username> ALL=(ALL) NOPASSWD: <path of the executable>/brightness
+```
+- now add a service in user systemctl, so it will start like a background service, you will find an example in the repo, "brightness.service", of course change the path to you brightness.sh
+```
+/etc/systemd/user
+```
+- now reload systemctl daemon and start the service
+```
+systemctl --user daemon-reload
+systemctl --user start brightness.service
 
-Just download the library and import it by adding <plc.h> in your project, you will also find some examples in the dedicated folder.
+```
+- check if it is working with
+```
+systemctl --user status brightness.service
+```
+- final step, on gnome i added the systemctl start comand at the start-up of gnome, this is a workaround for problems with X11 and privileges. we are not enabling from systemct --user enable comand
+
+```
+gnome-session-properties
+```
+- restart the laptop and check with the status comand if it is working
 
 
-## Usage
 
-I will add some explanation for every object, for now i have attached some examples and a link to the [Codesys Documentation](https://help.codesys.com/webapp/idx-Standard-lib;product=Standard;version=3.5.17.0)
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] For now i don't know
+- [ ] Add a config file for brightness path and idle times
 
 
 See the [open issues](https://github.com/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-for-Arduino/issues) for a full list of proposed features (and known issues).
@@ -113,8 +143,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Gambacorta Giuseppe -  - gambacortagiuseppe@outlook.it
 
-Project Link: [https://github.com/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-for-Arduino
-](https://github.com/GiuseppeGambacorta/PLC-Standard-IEC-61131-3-for-Arduino
+Project Link: [https://github.com/GiuseppeGambacorta/Idle-brightness-on-linux-laptops
+](https://github.com/GiuseppeGambacorta/Idle-brightness-on-linux-laptops
 )
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
